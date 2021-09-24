@@ -28,6 +28,7 @@ class ViewSummary extends StatelessWidget {
                   style: TextStyle(color: Color(0xff1c2e4a), fontFamily: 'Lato-Bold', fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
