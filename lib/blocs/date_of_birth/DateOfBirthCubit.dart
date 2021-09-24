@@ -9,6 +9,6 @@ class DateOfBirthCubit extends Cubit<DateOfBirthState> {
 
   void onDateChanged(DateTime date) {
     var formattedDate = formatter.format(date);
-    emit(DateOfBirthState(date: formattedDate));
+    emit(DateOfBirthState(date: formattedDate, originalDate: date));
   }
 }

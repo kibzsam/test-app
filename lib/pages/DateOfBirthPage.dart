@@ -11,6 +11,21 @@ class DateOfBirth extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final snackBar = SnackBar(
+      backgroundColor: Colors.red,
+      content: const Text(
+        'Please Choose your date of birth!!',
+        style: TextStyle(color: Colors.white),
+      ),
+      action: SnackBarAction(
+        label: 'Undo',
+        textColor: Colors.black,
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+
     return Scaffold(
       body: BlocBuilder<DateOfBirthCubit, DateOfBirthState>(
         builder: (context, state) {
@@ -34,6 +49,7 @@ class DateOfBirth extends StatelessWidget {
                 ),
                 Container(
                   child: DatePickerWidget(
+                    initialDate: state.originalDate,
                     lastDate: DateTime.now(),
                     looping: false,
                     firstDate: DateTime(1960),
@@ -46,7 +62,7 @@ class DateOfBirth extends StatelessWidget {
                   ),
                 ),
                 ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(height: height * 0.07, width: width * 0.45),
+                  constraints: BoxConstraints.tightFor(height: height * 0.06, width: width * 0.45),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
@@ -63,7 +79,13 @@ class DateOfBirth extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                       ),
-                      onPressed: () => context.read<PageCubit>().updatePageState(2),
+                      onPressed: () {
+                        if (state.date != null) {
+                          context.read<PageCubit>().updatePageState(2);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
